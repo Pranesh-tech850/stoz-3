@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+       h2{
+        color: blue;
+       }
+    </style>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <!-- Inline css -->
+    
+    <h1 style="color: green;">Hello</h1>
+
+    <!-- Internal Css -->
+
+    <h2>Hello 1</h2>
+
+    <!-- External css -->
+
+    <h3>Hello 2</h3>
+    
+
+    <!-- Tag, Class, ID -->
+     
+    <h4 class="heading-1">Hello 3</h4>
+
+    <h5 class="id-heading" id="heading">This is id</h5>
+
+
+    <p>lorrm</p>
+
+</body>
+</html>
