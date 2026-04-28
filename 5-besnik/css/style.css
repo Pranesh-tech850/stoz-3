@@ -110,21 +110,19 @@ header{
     padding: 100px 0px;
 }
 
-.need .container{
-    width: 50%;
-}
-
 .need-wrapper > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
 .need-wrapper > div > div {
     width: 45%;
 }
 
-.need-wrapper > div:nth-child(1) > div:nth-child(2){
-    text-align: right;
+.need-wrapper > div img:not(a img){
+    width: 80%;
 }
 
 /* search */
@@ -148,10 +146,84 @@ header{
     text-align: center;
 }
 
+
+/* solutions */
+.solutions{
+    padding: 100px 0px;
+}
+
+.solutions{
+    padding-bottom: 200px;
+}
+
+.solutions-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.solutions-wrapper > div{
+    width: 30%;
+}
+
+.solutions-wrapper > div h3{
+    font-size: 16px;
+}
+
+.solutions-wrapper > div > img{
+    width: 100%;
+}
+
+.solutions-wrapper > div{
+   position: relative;
+}
+
+.solutions-wrapper > div > div{
+   background-color: #ffffff;
+   width: 80%;
+   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.241);
+   padding: 30px;
+   position: absolute;
+   bottom:-100px;
+   left: 0px;
+}
+
+.solutions-wrapper > div > div > div {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0px;
+}
+
+.solutions-wrapper > div > div > div span{
+    font-size: 10px;
+}
+
+.happy{
+    padding: 100px 0px;
+}
+
+.happy .sec-heading h2{
+    position: relative;
+    display: inline-block;
+}
+
+.happy .sec-heading img{
+    position: absolute;
+    top: -40px;
+    left: -35px;
+}
+
 @media only screen and (min-width: 992px){
 
     .banner-wrapper h1{
         font-size: 94px;
+    }
+
+    .need .container{
+        width: 50%;
+    }
+
+    .need-wrapper > div:nth-child(odd) > div:nth-child(2){
+        text-align: right;
     }
 
     .line-break{
@@ -170,6 +242,31 @@ header{
     .search-wrapper div{
         width: 50%;
         margin-bottom: 30px;
+    }
+
+    .need-wrapper > div {
+        flex-direction: column;
+        gap: 50px;
+        text-align: center;
+    }
+
+    .need-wrapper > div > div {
+        width: 100%;
+    }
+
+    .need-wrapper > div:nth-child(2) {
+        flex-direction: column-reverse;
+    }
+
+    .solutions-wrapper{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    
+    .solutions-wrapper > div{
+        width: 80%;
+        margin: 100px auto;
     }
     
 }
