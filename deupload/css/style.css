@@ -2,3 +2,83 @@
 a{
     text-decoration: none;
 }
+
+.my-text-color{
+    color: #651FFF;
+}
+
+.banner,
+.main-img,
+.lightning,
+.lightweight{
+    padding: 100px 0px;
+}
+
+h2{
+    font-size: 45px;
+    font-weight:700;
+}
+
+
+h3{
+    font-size: 38px;
+    font-weight: 700;
+}
+
+
+
+
+/* Banner */
+.banner{
+    background-color: #EBE5FA;
+}
+
+.lighting-wrapper > div > div > div {
+    background-color: #651FFF;
+    padding: 60px;
+    border-radius: 30px;
+    color: #ffffff;
+}
+
+.lighting-wrapper a{
+    color: #ffffff;
+}
+
+/* lightweight */
+
+.lightweight-wrappper{
+    margin-top: 100px;
+}
+
+.lightweight-wrappper > div > div > div{
+    padding: 50px;
+    border-radius: 30px;
+}
+
+.lightweight-wrappper > div > div:nth-child(1) > div {
+    background-color: #FFF7ED;
+}
+
+.lightweight-wrappper > div > div:nth-child(2) > div {
+    background-color: #E0F7FA;
+}
+
+.lightweight-inner{
+    padding: 50px;
+    background-color: #ECECFE;
+    border-radius: 30px;
+    margin-top: 30px;
+}
+
+
+@media screen and (min-width: 992px){
+    h2{
+        font-size: 52px;
+    }
+
+
+    h3{
+        font-size: 42px;
+       
+    }
+} 
