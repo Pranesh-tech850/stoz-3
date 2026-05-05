@@ -10,7 +10,8 @@ a{
 .banner,
 .main-img,
 .lightning,
-.lightweight{
+.lightweight,
+.works{
     padding: 100px 0px;
 }
 
@@ -109,6 +110,20 @@ h4{
    border-bottom-right-radius: 20px;
 }
 
+/* Works */
+
+.works-wrapper > div > div > div{
+   position: relative;
+}
+
+.line{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 50%;
+    top: 35px;
+    left: 80%;
+}
 
 @media screen and (min-width: 992px){
     h2{
@@ -119,6 +134,20 @@ h4{
     h3{
         font-size: 42px;
        
+    }
+} 
+
+
+
+@media screen and (max-width: 768px){
+    .works-wrapper > div > div > div{
+        margin-bottom: 300px;
+    }
+
+    .line{
+        top: 350px;
+        left: 25%;
+        rotate: 90deg;
     }
 } 
 
