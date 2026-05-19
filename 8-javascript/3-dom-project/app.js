@@ -11,9 +11,9 @@ const filter = document.querySelector("#search");
 
 // Load all event listerners
 
-function loadEventListerners(){
+function loadEventListerners() {
 
-    // DOM Load event
+    // DOM load event
     document.addEventListener("DOMContentLoaded", getTasks);
 
     // Add task event
@@ -33,56 +33,58 @@ function loadEventListerners(){
 loadEventListerners();
 
 
-function getTasks(){
+function getTasks() {
 
     let tasks;
 
-    if(localStorage.getItem("tasks") === null){
+    if (localStorage.getItem("tasks") === null) {
         tasks = [];
-    }else{
+    } else {
         tasks = JSON.parse(localStorage.getItem("tasks"));
     }
 
-    tasks.forEach(function(task){
+    tasks.forEach(function (task) {
 
-         // Create element
-         const li = document.createElement("li");
 
-         // Add class
-         li.className = "collection-item";
- 
-         // Add a inner text
-         li.innerText = task;
- 
-         // Create a new link element 
-         const link = document.createElement("a");
- 
-         // Add class
-         link.className = "delete-item secondary-content";
- 
-         // Add a icon into link
-         link.innerHTML = `<i class="fa fa-remove"></i>`;
-         
-         // Add a link to li
-         li.appendChild(link);
- 
-         // Add a li to ul
-         taskList.appendChild(li);
-         
+        // Create element
+        const li = document.createElement("li");
+
+        // Add class
+        li.className = "collection-item";
+
+        // Add a inner text
+        li.innerText = task;
+
+        // Create a new link element 
+        const link = document.createElement("a");
+
+        // Add class
+        link.className = "delete-item secondary-content";
+
+        // Add a icon into link
+        link.innerHTML = `<i class="fa fa-remove"></i>`;
+
+        // Add a link to li
+        li.appendChild(link);
+
+        // Add a li to ul
+        taskList.appendChild(li);
     })
+
 
 }
 
-function addTask(e){
-   
+
+function addTask(e) {
+
     e.preventDefault();
 
     // Validate 
 
-    if(taskInput.value === ""){
+    if (taskInput.value === "") {
         alert("Please fill the field");
-    }else{
-      
+    } else {
+
         // Create element
         const li = document.createElement("li");
 
@@ -100,31 +102,31 @@ function addTask(e){
 
         // Add a icon into link
         link.innerHTML = `<i class="fa fa-remove"></i>`;
-        
+
         // Add a link to li
         li.appendChild(link);
 
         // Add a li to ul
         taskList.appendChild(li);
-        
+
         // Store in LS
         storeTaskInLocalStorage(taskInput.value);
 
         taskInput.value = "";
-        
+
     }
 
 }
 
 
-function storeTaskInLocalStorage(inputValue){
+function storeTaskInLocalStorage(inputValue) {
 
     let tasks;
 
-    if(localStorage.getItem("tasks") === null){
-        tasks = [];   
+    if (localStorage.getItem("tasks") === null) {
+        tasks = [];
         console.log("STEP-1");
-    }else{
+    } else {
         tasks = JSON.parse(localStorage.getItem("tasks"));
         console.log("STEP-2");
     }
@@ -133,12 +135,11 @@ function storeTaskInLocalStorage(inputValue){
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
-
 }
 
 // Remove Task
-function removeTask(e){
-   
+function removeTask(e) {
+
     // if(e.target.parentElement.className === "delete-item secondary-content"){
     //     if(confirm("Are you sure?")){
     //         e.target.parentElement.parentElement.remove();
@@ -147,34 +148,32 @@ function removeTask(e){
 
     // console.log(e.target.parentElement.classList);
 
-    if(e.target.parentElement.classList.contains("delete-item")){
-        if(confirm("Are you sure?")){
+    if (e.target.parentElement.classList.contains("delete-item")) {
+        if (confirm("Are you sure?")) {
             e.target.parentElement.parentElement.remove();
-        }
 
-        removeTaskFromLs(e.target.parentElement.parentElement)
+            removeTaskFromLocalStorage(e.target.parentElement.parentElement);
+        }
     }
 
 }
 
-function removeTaskFromLs(taskElement){
-    
+
+function removeTaskFromLocalStorage(taskElement) {
     let tasks;
 
-    if(localStorage.getItem("tasks") === null){
-        tasks = [];   
-    }else{
+    if (localStorage.getItem("tasks") === null) {
+        tasks = [];
+    } else {
         tasks = JSON.parse(localStorage.getItem("tasks"));
     }
 
     tasks.forEach(function(task, index){
-        
         if(taskElement.innerText === task){
-           
+            
             tasks.splice(index, 1);
 
         }
-
     })
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -183,36 +182,41 @@ function removeTaskFromLs(taskElement){
 
 // Clear Tasks
 
-function clearTask(){
+function clearTask() {
 
     // taskList.innerHTML = "";
 
     const listitems = Array.from(taskList.children);
 
-    listitems.forEach(function(element){
+    listitems.forEach(function (element) {
         element.remove();
-    })
+    });
 
-    clearFromLs();
+    clearForm();
 
 }
 
 
-function clearFromLs(){
+function clearForm() {
+
     localStorage.removeItem("tasks");
+
 }
 
-function filterTasks(e){
- 
+
+
+
+function filterTasks(e) {
+
     const text = e.target.value.toLowerCase();
 
-    document.querySelectorAll(".collection-item").forEach(function(task){
+    document.querySelectorAll(".collection-item").forEach(function (task) {
 
         const item = task.firstChild.textContent;
 
-        if(item.toLowerCase().indexOf(text) != -1){
+        if (item.toLowerCase().indexOf(text) != -1) {
             task.style.display = "block"
-        }else{
+        } else {
             task.style.display = "none"
         }
 
