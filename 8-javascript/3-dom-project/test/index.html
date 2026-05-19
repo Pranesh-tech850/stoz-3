@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rage Click Tracker 😡</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">Rage Click Tracker 😡</h1>
+            <p class="subtitle">How angry are you today?</p>
+        </header>
+
+        <main class="main-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Rage Clicks</div>
+                    <div class="stat-value" id="totalClicks">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Today's Rage Level</div>
+                    <div class="stat-value heat-indicator" id="rageLevel">😐</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Most Clicked Button</div>
+                    <div class="stat-value" id="mostClicked">None</div>
+                </div>
+            </div>
+
+            <div class="button-grid" id="buttonGrid">
+                <!-- Buttons will be generated here -->
+            </div>
+
+            <div class="message-box">
+                <p id="rageMessage">Click the buttons above to test your patience...</p>
+            </div>
+
+            <div class="history-section">
+                <h2>Click History</h2>
+                <div class="history-container" id="historyContainer">
+                    <p class="empty-history">No clicks yet. Stay calm! 🙏</p>
+                </div>
+            </div>
+
+            <button class="reset-btn" id="resetBtn">Reset All Stats</button>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
