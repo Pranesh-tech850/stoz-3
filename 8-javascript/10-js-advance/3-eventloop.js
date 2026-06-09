@@ -27,4 +27,9 @@ queueMicrotask(() => console.log("D (queueMicrotask)"));
 // Another macrotask
 setTimeout(() => console.log("E (Settimeout 2)", 0));
 
-console.log("F");
+function hello()
+{
+    console.log("Hello");
+
+}
+hello();

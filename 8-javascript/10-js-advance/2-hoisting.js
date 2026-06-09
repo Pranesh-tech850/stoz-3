@@ -8,20 +8,20 @@
 
 // let letVariable = "im let";
 
-sayHello();
+// sayHello();
 
-function sayHello(){
-    console.log("Hello , world");
-}
-
-
-
-let satGoodbye = function(){
-    console.log("Goodbye");
-}
+// function sayHello(){
+//     console.log("Hello , world");
+// }
 
 
-satGoodbye();
+
+// let satGoodbye = function(){
+//     console.log("Goodbye");
+// }
+
+
+// satGoodbye();
 
 
 var global = "Global";
@@ -33,6 +33,7 @@ function scopeDemo(){
     console.log(global)
 }
 
+console.log(global);
 
 
 scopeDemo();

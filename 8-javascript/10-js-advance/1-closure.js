@@ -1,16 +1,16 @@
 
 
-// function outer(){
-//     let secret = "Im private";
+function outer(){
+    const secret = "I'm Private"
 
-//     return function inner(){
-//         console.log(secret);
-//     };
-// }
+    return function inner(){
+        console.log(secret);
+    };
+}
 
-// const clousureFunc = outer();
+const clousureFunc = outer();
 
-// clousureFunc();
+clousureFunc();
 
 
 

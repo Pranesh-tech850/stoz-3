@@ -8,116 +8,92 @@ const usersDiv = document.getElementById("users");
 let editId = null;
 
 // READ
-async function getUsers() {
-  try {
-    const res = await fetch(API);
-    const users = await res.json();
+function getUsers() {
+  fetch(API)
+    .then((res) => res.json())
+    .then((users) => {
+      usersDiv.innerHTML = "";
 
-    usersDiv.innerHTML = "";
+      users.forEach((user) => {
+        const div = document.createElement("div");
+        div.classList.add("user");
 
-    users.forEach((user) => {
-      const div = document.createElement("div");
-      div.classList.add("user");
+        div.innerHTML = `
+          <span>${user.name}</span>
 
-      div.innerHTML = `
-        <span>${user.name}</span>
+          <div class="actions">
+            <button
+              class="edit"
+              onclick="editUser('${user.id}','${user.name}')"
+            >
+              Edit
+            </button>
 
-        <div class="actions">
-          <button
-            class="edit"
-            onclick="editUser('${user.id}','${user.name}')"
-          >
-            Edit
-          </button>
+            <button
+              class="delete"
+              onclick="deleteUser('${user.id}')"
+            >
+              Delete
+            </button>
+          </div>
+        `;
 
-          <button
-            class="delete"
-            onclick="deleteUser('${user.id}')"
-          >
-            Delete
-          </button>
-        </div>
-      `;
-
-      usersDiv.appendChild(div);
+        usersDiv.appendChild(div);
+      });
     });
-
-  } catch (error) {
-    console.log(error);
-  }
 }
 
 getUsers();
 
 // CREATE + UPDATE
-form.addEventListener("submit", async (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const userData = {
-    name: nameInput.value
+    name: nameInput.value,
   };
 
-  try {
-
-    if (editId) {
-
-      await fetch(`${API}/${editId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(userData)
-      });
-
+  if (editId) {
+    fetch(`${API}/${editId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    }).then(() => {
       editId = null;
-
-      form.querySelector("button").textContent =
-        "Save User";
-
-    } else {
-
-      await fetch(API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(userData)
-      });
-
-    }
-
-    form.reset();
-    getUsers();
-
-  } catch (error) {
-    console.log(error);
+      form.querySelector("button").textContent = "Save User";
+      form.reset();
+      getUsers();
+    });
+  } else {
+    fetch(API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    }).then(() => {
+      form.reset();
+      getUsers();
+    });
   }
 });
 
 // DELETE
-async function deleteUser(id) {
-
-  try {
-
-    await fetch(`${API}/${id}`, {
-      method: "DELETE"
-    });
-
+function deleteUser(id) {
+  fetch(`${API}/${id}`, {
+    method: "DELETE",
+  }).then(() => {
     getUsers();
-
-  } catch (error) {
-    console.log(error);
-  }
+  });
 }
 
 // EDIT
 function editUser(id, name) {
-
   nameInput.value = name;
-
   editId = id;
 
   form.querySelector("button").textContent =
     "Update User";
 }
-

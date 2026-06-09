@@ -135,10 +135,13 @@ document.querySelector("#book-list").addEventListener("click", function(e){
 
         const ui = new UI();
 
+
         // Delete book 
+       
         ui.deleteBook(e.target.parentElement);
 
         ui.showAlert("Book deleted succfully", "alert-success");
+
 
     }
 
