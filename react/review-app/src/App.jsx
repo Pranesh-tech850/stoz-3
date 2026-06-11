@@ -11,17 +11,16 @@ const App = () => {
     { id: 3, text: "This is a sample text 3" },
   ]);
 
-  // ✅ DARK MODE STATE (MISSING BEFORE)
-  // const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
-  // const toggleTheme = () => {
-  //   setDarkMode((prev) => !prev);
-  // };
+  const toggleTheme = () => {
+    setDarkMode((prev) => !prev);
+  };
 
   const addFeedback = (text) => {
     const newFeedback = {
       id: Date.now(),
-      text: text,
+      text,
     };
     setFeedback([newFeedback, ...feedback]);
   };
@@ -33,25 +32,18 @@ const App = () => {
   };
 
   return (
-    // <div className={darkMode ? "app dark" : "app"}>
-      
-    //   <Header darkMode={darkMode} toggleTheme={toggleTheme} />
-    <div>
-      <Header />
-      
+    <div className={darkMode ? "app dark" : "app"}>
+      <Header darkMode={darkMode} toggleTheme={toggleTheme} />
+
       <div className="container">
-        
         <FeedbackForm addFeedback={addFeedback} />
-
         <FeedbackStats feedback={feedback} />
-
-        <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
-
-        
+        <FeedbackList
+          feedback={feedback}
+          handleDelete={deleteFeedback}
+        />
       </div>
-      </div>
-
-    
+    </div>
   );
 };
 

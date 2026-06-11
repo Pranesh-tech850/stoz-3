@@ -25,11 +25,13 @@ const FeedbackForm = ({ addFeedback }) => {
     setText(value);
 
     if (value.trim().length < 10) {
+       setBtnDisable(true);
       setMessage("Character must be at least 10");
-      setBtnDisable(true);
+     
     } else {
-      setMessage("");
       setBtnDisable(false);
+      setMessage("");
+      
     }
   };
 

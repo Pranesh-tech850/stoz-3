@@ -120,3 +120,42 @@ footer{
 .link{
   color: #6d6dfc;
 }
+/* DARK MODE */
+
+.app.dark {
+  background-color: #121212;
+  color: white;
+  min-height: 100vh;
+}
+
+.app.dark .card {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.app.dark .input-group input {
+  background-color: #2d2d2d;
+  color: white;
+  border: 1px solid #555;
+}
+
+.app.dark .message {
+  color: #ff6b6b;
+}
+
+.app.dark footer {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.app.dark .link {
+  color: #8ab4f8;
+}
+
+.app.dark .btn-primary {
+  background-color: #2563eb;
+}
+
+.app.dark .btn-secondary {
+  background-color: #ea580c;
+}
