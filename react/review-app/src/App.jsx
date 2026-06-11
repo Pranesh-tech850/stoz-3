@@ -11,7 +11,7 @@ const App = () => {
     { id: 3, text: "This is a sample text 3" },
   ]);
 
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false); // Darkmode -> Light Mode
 
   const toggleTheme = () => {
     setDarkMode((prev) => !prev);
