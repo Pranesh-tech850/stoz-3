@@ -3,6 +3,8 @@ import Header from "./components/Header";
 import FeedbackList from "./components/FeedbackList";
 import FeedbackStats from "./components/FeedbackStats";
 import FeedbackForm from "./components/FeedbackForm";
+import FeedbackContext from "./context/FeedbackContext";
+import { FeedbackProvider } from "./context/FeedbackContext";
 
 const App = () => {
   const [feedback, setFeedback] = useState([
@@ -11,7 +13,7 @@ const App = () => {
     { id: 3, text: "This is a sample text 3" },
   ]);
 
-  const [darkMode, setDarkMode] = useState(false); // Darkmode -> Light Mode
+  const [darkMode, setDarkMode] = useState(false);
 
   const toggleTheme = () => {
     setDarkMode((prev) => !prev);
@@ -22,28 +24,32 @@ const App = () => {
       id: Date.now(),
       text,
     };
+
     setFeedback([newFeedback, ...feedback]);
   };
 
   const deleteFeedback = (id) => {
-    if (window.confirm("Are you sure")) {
+    if (window.confirm("Are you sure?")) {
       setFeedback(feedback.filter((item) => item.id !== id));
     }
   };
 
   return (
-    <div className={darkMode ? "app dark" : "app"}>
-      <Header darkMode={darkMode} toggleTheme={toggleTheme} />
+    <FeedbackProvider>
+      <div className={darkMode ? "app dark" : "app"}>
+        <Header darkMode={darkMode} toggleTheme={toggleTheme} />
 
-      <div className="container">
-        <FeedbackForm addFeedback={addFeedback} />
-        <FeedbackStats feedback={feedback} />
-        <FeedbackList
-          feedback={feedback}
-          handleDelete={deleteFeedback}
-        />
+        <div className="container">
+          <FeedbackForm addFeedback={addFeedback} />
+
+          <FeedbackStats feedback={feedback} />
+
+          <FeedbackList
+            handleDelete={deleteFeedback}
+          />
+        </div>
       </div>
-    </div>
+    </FeedbackProvider>
   );
 };
 
