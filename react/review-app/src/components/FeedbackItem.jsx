@@ -1,13 +1,15 @@
 import React from 'react'
-
+import { useContext } from 'react'
+import FeedbackContext from '../context/FeedbackContext'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Card from './sharder/Card';
 
 
-const FeedbackItem = ({ item,handleDelete }) => {
 
-    
+const FeedbackItem = () => {
+
+     const {deleteFeedback} = useContext(FeedbackContext)    
 
 
     return (
@@ -23,13 +25,13 @@ const FeedbackItem = ({ item,handleDelete }) => {
                     </div>
                     <div className='delete'>
 
-                        <MdDelete onClick={() => handleDelete(item.id)}/>
+                        <MdDelete onClick={() => {deleteFeedback}}/>
 
                     </div>
                 </div>
             </div>
         </Card>
-    )
+    )[lrllr[[mpuu]]]uu
 }
 
 export default FeedbackItem
