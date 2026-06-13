@@ -1,16 +1,19 @@
+import React, { useContext } from "react";
+import ThemeContext from "../context/ThemeContext";
+import "../index.css";
+
 const Header = ({
   text = "Review App",
-  bgColor = "#333333",
-  textColor = "white",
-  darkMode,
-  toggleTheme,
 }) => {
+
+  const { darkMode, toggleTheme } = useContext(ThemeContext);
+
   return (
     <header
       style={{
-        backgroundColor: bgColor,
-        color: textColor,
-        padding: "15px 20px",
+        backgroundColor: darkMode ? "#222" : "#ffffff",
+        color: darkMode ? "#ffffff" : "#000000",
+        padding: "20px",
       }}
     >
       <div

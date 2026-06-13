@@ -8,6 +8,7 @@ export const FeedbackProvider = ({ children }) => {
     { id: 2, text: "This is a sample text 2" },
     { id: 3, text: "This is a sample text 3" },
   ]);
+  
 
   const addFeedback = (text) => {
     const newFeedback = {
@@ -23,11 +24,34 @@ export const FeedbackProvider = ({ children }) => {
       setFeedback(feedback.filter((item) => item.id !== id));
     }
   }
+const [editFeedback, seteditFeedback] = useState({
+  item: {},
+  edit: false
+});
+
+const editItem = (item) => {
+  seteditFeedback({
+    item,
+    edit: true
+  });
+};
+
+
+ const updateFeedback = (id, updItem) => {
+  setFeedback(
+    feedback.map((item) =>
+      item.id === id
+        ? { ...item, ...updItem }
+        : item
+    )
+  );
+};
+
 
 
 
   return (
-    <FeedbackContext.Provider value={{ feedback, addFeedback,deleteFeedback }}>
+    <FeedbackContext.Provider value={{ feedback, addFeedback,deleteFeedback,editFeedback,editItem,updateFeedback }}>
       {children}
     </FeedbackContext.Provider>
   );

@@ -4,8 +4,10 @@ import FeedbackItem from './FeedbackItem'
 import FeedbackContext from '../context/FeedbackContext';
 
 
+
 const FeedbackList = () => {
-  const {feedback} = useContext(FeedbackContext)
+  const {feedback} = useContext(FeedbackContext);
+
 
   if(feedback.length === 0) return <h3>There is no items</h3>  
   
@@ -14,7 +16,7 @@ const FeedbackList = () => {
         
             <ul>
                 {feedback.map((item) => (
-                    <FeedbackItem key={item.id} item={item}/>
+                    <FeedbackItem key={item.id} item={item} />
                 ))}
             </ul>
         

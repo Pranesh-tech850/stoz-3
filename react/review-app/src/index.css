@@ -13,10 +13,13 @@ a{
 
 body{
   font-family: "Poppins", sans-serif;
-  background-color: rgb(202, 202, 202);
+  background-color: white;
 }
 
-
+body.dark{
+  background-color: black;
+  
+}
 .container{
   max-width: 750px;
   margin: 0px auto;
@@ -125,7 +128,7 @@ footer{
 .app.dark {
   background-color: #121212;
   color: white;
-  min-height: 100vh;
+
 }
 
 .app.dark .card {

@@ -1,27 +1,40 @@
-import React, { useState, useContext } from "react";
-import "../index.css";
+import React, { useState, useContext,useEffect } from "react";
 import Card from "./sharder/Card";
 import FeedbackContext from "../context/FeedbackContext";
+import ThemeContext from "../context/ThemeContext";
 import Button from "./sharder/Button";
 
 const FeedbackForm = () => {
-  const { addFeedback } = useContext(FeedbackContext);
+  const { addFeedback,editFeedback,updateFeedback} = useContext(FeedbackContext);
+  const { darkMode } = useContext(ThemeContext);
 
   const [text, setText] = useState("");
   const [btnDisable, setBtnDisable] = useState(true);
   const [message, setMessage] = useState("");
+   useEffect(() => {
+  if (editFeedback.edit === true) {
+    setText(editFeedback.item.text);
+    setBtnDisable(false);
+    }
+}, [editFeedback]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = (e) => {
+  e.preventDefault();
 
-    if (text.trim().length < 10) return;
+  if (text.trim().length < 10) return;
 
+  if (editFeedback.edit) {
+    updateFeedback(editFeedback.item.id, {
+      text,
+    });
+  } else {
     addFeedback(text);
+  }
 
-    setText("");
-    setBtnDisable(true);
-    setMessage("");
-  };
+  setText("");
+  setBtnDisable(true);
+  setMessage("");
+};
 
   const handleTextChange = (e) => {
     const value = e.target.value;
@@ -30,7 +43,7 @@ const FeedbackForm = () => {
 
     if (value.trim().length === 0) {
       setBtnDisable(true);
-      setMessage(null);
+      setMessage("");
     } else if (value.trim().length < 10) {
       setBtnDisable(true);
       setMessage("Character must be at least 10");
@@ -41,26 +54,30 @@ const FeedbackForm = () => {
   };
 
   return (
+       <div className={`app ${darkMode ? "dark " : ""}`}>
     <Card>
-      <h3>Add Your Review</h3>
+   
+        <h3>Add Your Review</h3>
 
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <input
-            type="text"
-            placeholder="Enter your review"
-            value={text}
-            onChange={handleTextChange}
-          />
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder="Enter your review"
+              value={text}
+              onChange={handleTextChange}
+            />
 
-          <Button type="submit" disabled={btnDisable}>
-            Send
-          </Button>
-        </div>
+            <Button type="submit" disabled={btnDisable}>
+              Send
+            </Button>
+          </div>
 
-        {message && <p className="message">{message}</p>}
-      </form>
+          {message && <p className="message">{message}</p>}
+        </form>
+      
     </Card>
+    </div>
   );
 };
 
