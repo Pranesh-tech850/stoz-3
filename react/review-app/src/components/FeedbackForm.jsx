@@ -28,7 +28,7 @@ const FeedbackForm = () => {
       text,
     });
   } else {
-    addFeedback(text);
+    addFeedback({text});
   }
 
   setText("");

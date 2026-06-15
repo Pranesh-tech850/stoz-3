@@ -1,11 +1,12 @@
 import { createContext, useState } from "react";
 import { useEffect } from "react";
 
-const ThemeContext = createContext();
+  const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
-    useEffect(() => {
+  
+useEffect(() => {
     document.body.className = darkMode ? "dark" : "";
   }, [darkMode]);
 
