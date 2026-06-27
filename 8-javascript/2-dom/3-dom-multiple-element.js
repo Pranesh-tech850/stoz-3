@@ -4,6 +4,7 @@
 
 // HTML COLLECTION
 const items = document.getElementsByClassName("collection-item");
+console.log(items);
 
 // console.log(items);
 
@@ -27,6 +28,7 @@ const items = document.getElementsByClassName("collection-item");
 // Convert the HTMLCollection to array
 
 let lists = Array.from(items);
+console.log(lists);
 
 // console.log(lists);
 

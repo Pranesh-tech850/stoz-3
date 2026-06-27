@@ -39,7 +39,9 @@ const fruits = ["Apple","Orange","Kiwi", "Lemon"];
 // Splice => Add and remove
 
 // Splice to remove
-// fruits.splice(1, 1);
+fruits.splice(1, 1);
+
+console.log(fruits);
 
 // Splice to add
 // fruits.splice(1, 1, "Ava");

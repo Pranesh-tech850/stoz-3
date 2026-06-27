@@ -40,11 +40,11 @@ val = list.childElementCount;
 val = list.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
 
 // Get a next sibling
-val = firstListItem.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
+let val2 = firstListItem.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
 
 
 // Get a previous sibling
 val = lastListItem.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling;
 
 
-console.log(val);
+console.log(val2);

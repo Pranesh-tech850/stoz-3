@@ -27,7 +27,7 @@ const App = () => {
           <FeedbackForm  />
 
           {/* <FeedbackStats  /> */}
-          <FeedbackList />
+          <FeedbackList  />
         
         </div>
         </div>
