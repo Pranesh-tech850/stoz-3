@@ -85,6 +85,25 @@ export const loginUser = async(req, res) => {
 
 }
 
+
+export const getUserProfile = async (req, res) => {
+    try {
+        const profile = await User.findById(req.user.id).select("-password");
+
+        if (!profile) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        res.json(profile);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
 // @desc Get user profile
 // @route GET /api/auth/profile
 

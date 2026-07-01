@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
 import connectDB from "./config/db.js";
+import orderRoute from "./routes/orderRoute.js";
 import mongoose from "mongoose";
 
 
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/orders",orderRoute);
 
 
 const PORT = process.env.PORT || 5000;
