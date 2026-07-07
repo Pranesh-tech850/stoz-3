@@ -39,7 +39,7 @@ const AdminDashboard = () => {
 
       const revenue = ordersData.reduce(
         (total, order) => total + (order.totalPrice || order.price || 0),
-        0
+        0,
       );
 
       setStats({
@@ -56,11 +56,9 @@ const AdminDashboard = () => {
     }
   };
 
-  const updateOrderStatus = async (orderId) => {
+  const updateOrderStatus = async (orderId, status) => {
     try {
-      await api.put(`/orders/${orderId}`, {
-        isDelivered: true,
-      });
+      await api.put(`/orders/${orderId}/status`, { status });
 
       fetchDashboardData();
     } catch (error) {
@@ -73,12 +71,10 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-     <div className="flex flex-col justify-center items-center h-64 gap-4">
-      <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-      <p className="text-gray-600 font-medium">
-        Loading Dashboard...
-      </p>
-    </div>
+      <div className="flex flex-col justify-center items-center h-64 gap-4">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-gray-600 font-medium">Loading Dashboard...</p>
+      </div>
     );
   }
 
@@ -87,9 +83,7 @@ const AdminDashboard = () => {
       {/* Hero Header */}
       <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-6 py-10">
-          <h1 className="text-4xl font-extrabold">
-            Admin Dashboard 🚀
-          </h1>
+          <h1 className="text-4xl font-extrabold">Admin Dashboard 🚀</h1>
 
           <p className="mt-2 text-lg text-purple-100">
             Welcome back, {user.name}
@@ -104,9 +98,7 @@ const AdminDashboard = () => {
             <div className="flex justify-between">
               <div>
                 <p className="text-sm">Products</p>
-                <h2 className="text-4xl font-bold">
-                  {stats.products}
-                </h2>
+                <h2 className="text-4xl font-bold">{stats.products}</h2>
               </div>
 
               <Package size={40} />
@@ -117,9 +109,7 @@ const AdminDashboard = () => {
             <div className="flex justify-between">
               <div>
                 <p className="text-sm">Orders</p>
-                <h2 className="text-4xl font-bold">
-                  {stats.orders}
-                </h2>
+                <h2 className="text-4xl font-bold">{stats.orders}</h2>
               </div>
 
               <ShoppingCart size={40} />
@@ -130,9 +120,7 @@ const AdminDashboard = () => {
             <div className="flex justify-between">
               <div>
                 <p className="text-sm">Revenue</p>
-                <h2 className="text-4xl font-bold">
-                  ₹{stats.revenue}
-                </h2>
+                <h2 className="text-4xl font-bold">₹{stats.revenue}</h2>
               </div>
 
               <IndianRupee size={40} />
@@ -162,9 +150,7 @@ const AdminDashboard = () => {
         {/* Recent Orders */}
         <div className="mt-10 bg-white rounded-3xl shadow-xl overflow-hidden">
           <div className="bg-slate-900 text-white px-6 py-4">
-            <h2 className="text-xl font-bold">
-              Recent Orders
-            </h2>
+            <h2 className="text-xl font-bold">Recent Orders</h2>
           </div>
 
           <div className="overflow-x-auto">
@@ -180,41 +166,44 @@ const AdminDashboard = () => {
 
               <tbody>
                 {orders.slice(0, 5).map((order) => (
-                  <tr
-                    key={order._id}
-                    className="border-b hover:bg-slate-50"
-                  >
-                    <td className="p-4">
-                      {order._id.slice(-8)}
-                    </td>
+                  <tr key={order._id} className="border-b hover:bg-slate-50">
+                    <td className="p-4">{order._id.slice(-8)}</td>
 
                     <td className="p-4 font-semibold">
                       ₹{order.totalPrice || order.price}
                     </td>
 
                     <td className="p-4">
-                      {order.isDelivered ? (
-                        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-                          Delivered
-                        </span>
-                      ) : (
-                        <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
-                          Pending
-                        </span>
-                      )}
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-medium
+                           ${
+                             order.status === "Delivered"
+                               ? "bg-green-100 text-green-700"
+                               : order.status === "Shipped"
+                                 ? "bg-blue-100 text-blue-700"
+                                 : order.status === "Processing"
+                                   ? "bg-purple-100 text-purple-700"
+                                   : "bg-yellow-100 text-yellow-700"
+                           }
+    `}
+                      >
+                        {order.status || "Pending"}
+                      </span>
                     </td>
 
                     <td className="p-4">
-                      {!order.isDelivered && (
-                        <button
-                          onClick={() =>
-                            updateOrderStatus(order._id)
-                          }
-                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                        >
-                          Mark Delivered
-                        </button>
-                      )}
+                      <select
+                        value={order.status}
+                        onChange={(e) =>
+                          updateOrderStatus(order._id, e.target.value)
+                        }
+                        className="border px-3 py-2 rounded-lg"
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                      </select>
                     </td>
                   </tr>
                 ))}

@@ -18,7 +18,6 @@ const ManageOrdersPage = () => {
   const fetchOrders = async () => {
     try {
       const { data } = await api.get("/orders");
-
       setOrders(data);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -27,21 +26,15 @@ const ManageOrdersPage = () => {
     }
   };
 
-  const markDelivered = async (orderId) => {
+  const updateOrderStatus = async (orderId, status) => {
     try {
-      await api.put(`/orders/${orderId}`, {
-        isDelivered: true,
+      await api.put(`/orders/${orderId}/status`, {
+        status,
       });
 
-      setOrders((prev) =>
-        prev.map((order) =>
-          order._id === orderId
-            ? { ...order, isDelivered: true }
-            : order
-        )
-      );
+      fetchOrders();
     } catch (error) {
-      console.error(error);
+      console.error("Error updating order:", error);
     }
   };
 
@@ -53,7 +46,7 @@ const ManageOrdersPage = () => {
         prev.filter((order) => order._id !== orderId)
       );
     } catch (error) {
-      console.error(error);
+      console.error("Error deleting order:", error);
     }
   };
 
@@ -68,7 +61,6 @@ const ManageOrdersPage = () => {
   return (
     <div className="min-h-screen bg-slate-100 p-6">
       <div className="max-w-7xl mx-auto">
-
         {/* Header */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-3xl p-8 shadow-xl">
           <h1 className="text-4xl font-bold">
@@ -82,7 +74,6 @@ const ManageOrdersPage = () => {
 
         {/* Orders Table */}
         <div className="mt-8 bg-white rounded-3xl shadow-xl overflow-hidden">
-
           <div className="bg-slate-900 text-white p-5">
             <h2 className="text-xl font-semibold">
               All Orders
@@ -91,14 +82,14 @@ const ManageOrdersPage = () => {
 
           <div className="overflow-x-auto">
             <table className="w-full">
-
               <thead className="bg-slate-100">
                 <tr>
                   <th className="p-4 text-left">Order ID</th>
                   <th className="p-4 text-left">Customer</th>
                   <th className="p-4 text-left">Items</th>
                   <th className="p-4 text-left">Amount</th>
-                  <th className="p-4 text-left">Status</th>
+                  <th className="p-4 text-left">Current Status</th>
+                  <th className="p-4 text-left">Change Status</th>
                   <th className="p-4 text-left">Actions</th>
                 </tr>
               </thead>
@@ -125,58 +116,71 @@ const ManageOrdersPage = () => {
                       ₹{order.totalPrice}
                     </td>
 
+                    {/* Status Badge */}
                     <td className="p-4">
-                      {order.isDelivered ? (
-                        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full flex items-center gap-2 w-fit">
-                          <CheckCircle size={16} />
-                          Delivered
-                        </span>
-                      ) : (
-                        <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full flex items-center gap-2 w-fit">
-                          <Clock size={16} />
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-medium
+                        ${
+                          order.status === "Delivered"
+                            ? "bg-green-100 text-green-700"
+                            : order.status === "Shipped"
+                            ? "bg-blue-100 text-blue-700"
+                            : order.status === "Processing"
+                            ? "bg-purple-100 text-purple-700"
+                            : "bg-yellow-100 text-yellow-700"
+                        }`}
+                      >
+                        {order.status || "Pending"}
+                      </span>
+                    </td>
+
+                    {/* Status Select */}
+                    <td className="p-4">
+                      <select
+                        value={order.status || "Pending"}
+                        onChange={(e) =>
+                          updateOrderStatus(
+                            order._id,
+                            e.target.value
+                          )
+                        }
+                        className="border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      >
+                        <option value="Pending">
                           Pending
-                        </span>
-                      )}
+                        </option>
+                        <option value="Processing">
+                          Processing
+                        </option>
+                        <option value="Shipped">
+                          Shipped
+                        </option>
+                        <option value="Delivered">
+                          Delivered
+                        </option>
+                      </select>
                     </td>
 
+                    {/* Delete */}
                     <td className="p-4">
-                      <div className="flex gap-3">
-
-                        {!order.isDelivered && (
-                          <button
-                            onClick={() =>
-                              markDelivered(order._id)
-                            }
-                            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-                          >
-                            Deliver
-                          </button>
-                        )}
-
-                        <button
-                          onClick={() =>
-                            deleteOrder(order._id)
-                          }
-                          className="bg-red-600 text-white p-2 rounded-lg hover:bg-red-700"
-                        >
-                          <Trash2 size={18} />
-                        </button>
-
-                      </div>
+                      <button
+                        onClick={() =>
+                          deleteOrder(order._id)
+                        }
+                        className="bg-red-600 text-white p-2 rounded-lg hover:bg-red-700 transition"
+                      >
+                        <Trash2 size={18} />
+                      </button>
                     </td>
-
                   </tr>
                 ))}
               </tbody>
-
             </table>
           </div>
-
         </div>
 
         {/* Summary Cards */}
         <div className="grid md:grid-cols-3 gap-6 mt-8">
-
           <div className="bg-white p-6 rounded-2xl shadow-lg">
             <Package
               size={32}
@@ -205,7 +209,8 @@ const ManageOrdersPage = () => {
             <p className="text-3xl font-bold">
               {
                 orders.filter(
-                  (order) => order.isDelivered
+                  (order) =>
+                    order.status === "Delivered"
                 ).length
               }
             </p>
@@ -224,14 +229,13 @@ const ManageOrdersPage = () => {
             <p className="text-3xl font-bold">
               {
                 orders.filter(
-                  (order) => !order.isDelivered
+                  (order) =>
+                    order.status === "Pending"
                 ).length
               }
             </p>
           </div>
-
         </div>
-
       </div>
     </div>
   );
